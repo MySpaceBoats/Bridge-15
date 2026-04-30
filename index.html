@@ -870,24 +870,49 @@
   </div>
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 <script>
 (function () {
-  var overlay  = document.getElementById('cv-modal');
-  var form     = document.getElementById('cv-form');
-  var submitBtn= document.getElementById('modal-submit');
-  var errorEl  = document.getElementById('modal-error');
-  var successEl= document.getElementById('modal-success');
+  var overlay   = document.getElementById('cv-modal');
+  var form      = document.getElementById('cv-form');
+  var submitBtn = document.getElementById('modal-submit');
+  var errorEl   = document.getElementById('modal-error');
+  var successEl = document.getElementById('modal-success');
 
+  function buildPdfOpts(el) {
+    return {
+      margin: 0,
+      filename: 'CV-Reda-Sebbani.pdf',
+      image: { type: 'jpeg', quality: 0.95 },
+      html2canvas: { scale: 2, useCORS: true, logging: false, windowWidth: 1200 },
+      jsPDF: { unit: 'px', format: [el.scrollWidth, el.scrollHeight], orientation: 'portrait' },
+    };
+  }
+
+  /* ── Téléchargement direct ── */
+  document.getElementById('cv-download-btn').addEventListener('click', async function () {
+    var btn = this;
+    var icon = btn.querySelector('.cv-btn-icon');
+    btn.disabled = true;
+    icon.textContent = '…';
+    try {
+      if (typeof html2pdf === 'undefined') throw new Error('lib indisponible');
+      var el = document.getElementById('cv-capture');
+      await html2pdf().set(buildPdfOpts(el)).from(el).save();
+    } catch (e) {
+      alert('Impossible de générer le PDF. Veuillez réessayer.');
+    } finally {
+      btn.disabled = false;
+      icon.textContent = '↓';
+    }
+  });
+
+  /* ── Modale email ── */
   function openModal() {
     overlay.classList.add('is-open');
-    document.getElementById('email-input').focus();
+    setTimeout(function () { document.getElementById('email-input').focus(); }, 50);
   }
-
-  function closeModal() {
-    overlay.classList.remove('is-open');
-  }
-
+  function closeModal() { overlay.classList.remove('is-open'); }
   function resetModal() {
     form.hidden = false;
     successEl.hidden = true;
@@ -897,61 +922,33 @@
     document.getElementById('email-input').value = '';
   }
 
-  document.getElementById('cv-download-btn').addEventListener('click', async function () {
-    var btn = this;
-    btn.disabled = true;
-    btn.querySelector('.cv-btn-icon').textContent = '…';
-    try {
-      var el = document.getElementById('cv-capture');
-      var opt = {
-        margin: 0,
-        filename: 'CV-Reda-Sebbani.pdf',
-        image: { type: 'jpeg', quality: 0.95 },
-        html2canvas: { scale: 2, useCORS: true, logging: false, windowWidth: 1200 },
-        jsPDF: { unit: 'px', format: [el.scrollWidth, el.scrollHeight], orientation: 'portrait' },
-      };
-      await html2pdf().set(opt).from(el).save();
-    } finally {
-      btn.disabled = false;
-      btn.querySelector('.cv-btn-icon').textContent = '↓';
-    }
-  });
-
   document.getElementById('cv-btn').addEventListener('click', openModal);
   document.getElementById('modal-close').addEventListener('click', function () { closeModal(); resetModal(); });
   overlay.addEventListener('click', function (e) { if (e.target === overlay) { closeModal(); resetModal(); } });
-  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && overlay.classList.contains('is-open')) { closeModal(); resetModal(); } });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && overlay.classList.contains('is-open')) { closeModal(); resetModal(); }
+  });
 
+  /* ── Envoi par email ── */
   form.addEventListener('submit', async function (e) {
     e.preventDefault();
     var email = document.getElementById('email-input').value.trim();
     if (!email) return;
-
     submitBtn.disabled = true;
     errorEl.hidden = true;
     submitBtn.textContent = 'Génération du PDF…';
-
     try {
+      if (typeof html2pdf === 'undefined') throw new Error('lib indisponible');
       var el = document.getElementById('cv-capture');
-      var opt = {
-        margin: 0,
-        image: { type: 'jpeg', quality: 0.95 },
-        html2canvas: { scale: 2, useCORS: true, logging: false, windowWidth: 1200 },
-        jsPDF: { unit: 'px', format: [el.scrollWidth, el.scrollHeight], orientation: 'portrait' },
-      };
-
-      var dataUri = await html2pdf().set(opt).from(el).outputPdf('datauristring');
+      var dataUri = await html2pdf().set(buildPdfOpts(el)).from(el).outputPdf('datauristring');
       var pdfBase64 = dataUri.split(',')[1];
-
       submitBtn.textContent = 'Envoi en cours…';
-
       var res = await fetch('/send-cv', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email: email, pdfBase64: pdfBase64 }),
       });
       var data = await res.json();
-
       if (data.success) {
         form.hidden = true;
         successEl.hidden = false;
