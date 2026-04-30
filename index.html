@@ -968,8 +968,11 @@
     try {
       if (typeof html2pdf === 'undefined') throw new Error('lib indisponible');
       var el = document.getElementById('cv-capture');
-      var dataUri = await html2pdf().set(buildPdfOpts(el)).from(el).outputPdf('datauristring');
-      var pdfBase64 = dataUri.split(',')[1];
+      var worker = html2pdf().set(buildPdfOpts(el)).from(el).toPdf();
+      var dataUri = await worker.output('datauristring');
+      var parts = (dataUri || '').split(',');
+      var pdfBase64 = parts.length > 1 ? parts[1] : '';
+      if (!pdfBase64) throw new Error('Échec de génération du PDF');
       submitBtn.textContent = 'Envoi en cours…';
       await callSendCv({ email: email, pdfBase64: pdfBase64 });
       form.hidden = true;
