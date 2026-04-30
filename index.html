@@ -489,6 +489,20 @@
     background: rgba(247,243,238,0.08);
     border-color: rgba(247,243,238,0.6);
   }
+  .cv-btn--solid {
+    background: var(--cream);
+    color: var(--ink);
+    border-color: var(--cream);
+  }
+  .cv-btn--solid:hover {
+    background: var(--cream-mid);
+    border-color: var(--cream-mid);
+  }
+  .cv-btn--solid .cv-btn-icon {
+    border-color: rgba(15,13,10,0.3);
+    color: var(--ink);
+  }
+  .cv-btn:disabled { opacity: 0.5; cursor: not-allowed; }
   .cv-btn-icon {
     width: 18px;
     height: 18px;
@@ -640,9 +654,13 @@
     <h1 class="hero-name">Reda<br><em>Sebbani</em></h1>
     <p class="hero-tag">An Enthusiastic Motivated Entrepreneur and a Business Performance Scaler who works with dedication and lot of enthusiasm!</p>
     <div class="hero-actions" data-html2canvas-ignore="true">
-      <button class="cv-btn" id="cv-btn" type="button">
+      <button class="cv-btn cv-btn--solid" id="cv-download-btn" type="button">
         <span class="cv-btn-icon">↓</span>
-        Recevoir le CV par email
+        Télécharger maintenant
+      </button>
+      <button class="cv-btn" id="cv-btn" type="button">
+        <span class="cv-btn-icon">✉</span>
+        Recevoir par email
       </button>
     </div>
   </div>
@@ -878,6 +896,26 @@
     submitBtn.textContent = 'Envoyer le CV';
     document.getElementById('email-input').value = '';
   }
+
+  document.getElementById('cv-download-btn').addEventListener('click', async function () {
+    var btn = this;
+    btn.disabled = true;
+    btn.querySelector('.cv-btn-icon').textContent = '…';
+    try {
+      var el = document.getElementById('cv-capture');
+      var opt = {
+        margin: 0,
+        filename: 'CV-Reda-Sebbani.pdf',
+        image: { type: 'jpeg', quality: 0.95 },
+        html2canvas: { scale: 2, useCORS: true, logging: false, windowWidth: 1200 },
+        jsPDF: { unit: 'px', format: [el.scrollWidth, el.scrollHeight], orientation: 'portrait' },
+      };
+      await html2pdf().set(opt).from(el).save();
+    } finally {
+      btn.disabled = false;
+      btn.querySelector('.cv-btn-icon').textContent = '↓';
+    }
+  });
 
   document.getElementById('cv-btn').addEventListener('click', openModal);
   document.getElementById('modal-close').addEventListener('click', function () { closeModal(); resetModal(); });
