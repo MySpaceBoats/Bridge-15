@@ -61,6 +61,14 @@
     align-items: end;
   }
 
+  .hero-actions {
+    grid-column: 1 / -1;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-top: 32px;
+  }
+
   .hero-name {
     font-family: var(--ff-display);
     font-weight: 300;
@@ -457,37 +465,39 @@
   }
 
   @media print {
-    .cv-btn-wrap, .modal-overlay { display: none !important; }
+    .hero-actions, .modal-overlay { display: none !important; }
   }
 
   /* ── CV DOWNLOAD BUTTON ── */
   .cv-btn {
-    display: flex;
+    display: inline-flex;
     align-items: center;
     gap: 10px;
-    width: 100%;
-    padding: 11px 14px;
-    background: var(--ink);
+    padding: 12px 22px;
+    background: transparent;
     color: var(--cream);
-    border: none;
+    border: 1px solid rgba(247,243,238,0.35);
     cursor: pointer;
     font-family: var(--ff-body);
     font-size: 11px;
     font-weight: 400;
-    letter-spacing: 0.12em;
+    letter-spacing: 0.13em;
     text-transform: uppercase;
-    transition: opacity 0.2s;
+    transition: background 0.2s, border-color 0.2s;
   }
-  .cv-btn:hover { opacity: 0.78; }
+  .cv-btn:hover {
+    background: rgba(247,243,238,0.08);
+    border-color: rgba(247,243,238,0.6);
+  }
   .cv-btn-icon {
-    width: 20px;
-    height: 20px;
-    border: 1px solid rgba(247,243,238,0.4);
+    width: 18px;
+    height: 18px;
+    border: 1px solid rgba(247,243,238,0.5);
     border-radius: 50%;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    font-size: 12px;
+    font-size: 11px;
     flex-shrink: 0;
     line-height: 1;
   }
@@ -629,6 +639,12 @@
   <div class="hero-inner">
     <h1 class="hero-name">Reda<br><em>Sebbani</em></h1>
     <p class="hero-tag">An Enthusiastic Motivated Entrepreneur and a Business Performance Scaler who works with dedication and lot of enthusiasm!</p>
+    <div class="hero-actions" data-html2canvas-ignore="true">
+      <button class="cv-btn" id="cv-btn" type="button">
+        <span class="cv-btn-icon">↓</span>
+        Recevoir le CV par email
+      </button>
+    </div>
   </div>
 </header>
 
@@ -698,13 +714,6 @@
         <li>Yoga</li>
         <li>Business &amp; Entrepreneuriat</li>
       </ul>
-    </div>
-
-    <div class="sidebar-section cv-btn-wrap" data-html2canvas-ignore="true">
-      <button class="cv-btn" id="cv-btn" type="button">
-        <span class="cv-btn-icon">↓</span>
-        Recevoir le CV par email
-      </button>
     </div>
 
   </aside>
