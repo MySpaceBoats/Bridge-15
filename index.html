@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reda Sebbani — CV</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --ink:       #0f0d0a;
+    --cream:     #f7f3ee;
+    --cream-mid: #ede7df;
+    --hero-bg:   #0f0d0a;
+    --accent:    oklch(62% 0.13 48);
+    --rule:      #d6cfc6;
+    --muted:     #7a7168;
+    --ff-display: 'Cormorant Garamond', Georgia, serif;
+    --ff-body:    'DM Sans', system-ui, sans-serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--cream);
+    color: var(--ink);
+    font-family: var(--ff-body);
+    font-size: 14px;
+    line-height: 1.6;
+    font-weight: 300;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    background: var(--hero-bg);
+    color: var(--cream);
+    padding: 80px 64px 72px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 80% 60% at 70% 50%, oklch(20% 0.06 48 / 0.4), transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 48px;
+    align-items: end;
+  }
+
+  .hero-name {
+    font-family: var(--ff-display);
+    font-weight: 300;
+    font-size: clamp(56px, 8vw, 110px);
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero-name em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .hero-tag {
+    font-family: var(--ff-display);
+    font-style: italic;
+    font-size: 17px;
+    font-weight: 300;
+    color: oklch(75% 0.03 48);
+    max-width: 340px;
+    line-height: 1.55;
+    text-align: right;
+    position: relative;
+    z-index: 1;
+    padding-bottom: 6px;
+  }
+
+  .hero-tag::before {
+    content: '\201C';
+    font-size: 48px;
+    line-height: 0;
+    vertical-align: -18px;
+    margin-right: 4px;
+    color: var(--accent);
+    opacity: 0.6;
+  }
+
+  /* ── LAYOUT ── */
+  .page {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 64px 64px 80px;
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: 64px;
+    align-items: start;
+  }
+
+  /* ── SIDEBAR ── */
+  .sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    position: sticky;
+    top: 40px;
+  }
+
+  .section-label {
+    font-family: var(--ff-body);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 16px;
+    display: block;
+  }
+
+  .contact-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .contact-list li {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .contact-list .label {
+    font-size: 9px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 500;
+  }
+
+  .contact-list .value {
+    font-size: 13px;
+    color: var(--ink);
+    word-break: break-all;
+  }
+
+  .contact-list a {
+    color: var(--accent);
+    text-decoration: none;
+  }
+
+  .skill-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .skill-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
+  }
+
+  .skill-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--accent);
+    flex-shrink: 0;
+  }
+
+  .lang-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .lang-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 13px;
+  }
+
+  .lang-bar {
+    width: 80px;
+    height: 2px;
+    background: var(--cream-mid);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .lang-fill {
+    height: 100%;
+    background: var(--accent);
+    border-radius: 2px;
+  }
+
+  .hobby-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .hobby-list li {
+    font-size: 13px;
+    color: var(--muted);
+    padding-left: 14px;
+    position: relative;
+  }
+
+  .hobby-list li::before {
+    content: '—';
+    position: absolute;
+    left: 0;
+    color: var(--rule);
+  }
+
+  /* ── MAIN ── */
+  .main {
+    display: flex;
+    flex-direction: column;
+    gap: 52px;
+  }
+
+  .section {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .section-head {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--rule);
+    margin-bottom: 28px;
+  }
+
+  .section-title {
+    font-family: var(--ff-display);
+    font-size: 28px;
+    font-weight: 400;
+    letter-spacing: 0.01em;
+  }
+
+  .section-num {
+    font-family: var(--ff-display);
+    font-style: italic;
+    font-size: 13px;
+    color: var(--accent);
+    font-weight: 300;
+  }
+
+  /* ── EXPERIENCE ENTRY ── */
+  .entry {
+    display: grid;
+    grid-template-columns: 160px 1fr;
+    gap: 24px 32px;
+    padding-bottom: 32px;
+    margin-bottom: 32px;
+    border-bottom: 1px solid var(--cream-mid);
+  }
+
+  .entry:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
+
+  .entry-meta {
+    padding-top: 2px;
+  }
+
+  .entry-date {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    line-height: 1.4;
+    margin-bottom: 6px;
+  }
+
+  .entry-org {
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    line-height: 1.5;
+  }
+
+  .entry-title {
+    font-family: var(--ff-display);
+    font-size: 20px;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    line-height: 1.25;
+    margin-bottom: 10px;
+  }
+
+  .entry-body {
+    font-size: 13.5px;
+    color: #3a3630;
+    line-height: 1.7;
+  }
+
+  .entry-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin-top: 10px;
+  }
+
+  .entry-list li {
+    padding-left: 16px;
+    position: relative;
+    font-size: 13px;
+    color: #4a4540;
+    line-height: 1.6;
+  }
+
+  .entry-list li::before {
+    content: '›';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-size: 15px;
+    line-height: 1.4;
+  }
+
+  /* ── EDUCATION ── */
+  .edu-entry {
+    display: grid;
+    grid-template-columns: 160px 1fr;
+    gap: 8px 32px;
+    padding-bottom: 24px;
+    margin-bottom: 24px;
+    border-bottom: 1px solid var(--cream-mid);
+  }
+
+  .edu-entry:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+    margin-bottom: 0;
+  }
+
+  .edu-year {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    padding-top: 3px;
+  }
+
+  .edu-degree {
+    font-family: var(--ff-display);
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 1.3;
+    margin-bottom: 4px;
+  }
+
+  .edu-school {
+    font-size: 12.5px;
+    color: var(--muted);
+  }
+
+  /* ── SPECIALISATIONS GRID ── */
+  .spec-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px 24px;
+  }
+
+  .spec-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 13.5px;
+    line-height: 1.45;
+  }
+
+  .spec-item::before {
+    content: '';
+    width: 18px;
+    height: 1px;
+    background: var(--accent);
+    flex-shrink: 0;
+    margin-top: 9px;
+  }
+
+  /* ── DIVIDER IN SIDEBAR ── */
+  .sidebar-section {
+    padding-top: 32px;
+    border-top: 1px solid var(--cream-mid);
+  }
+
+  .sidebar-section:first-child {
+    padding-top: 0;
+    border-top: none;
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero-name       { animation: fadeUp 0.9s cubic-bezier(.16,1,.3,1) 0.1s both; }
+  .hero-tag        { animation: fadeUp 0.9s cubic-bezier(.16,1,.3,1) 0.3s both; }
+  .sidebar         { animation: fadeUp 0.8s cubic-bezier(.16,1,.3,1) 0.5s both; }
+  .main .section:nth-child(1) { animation: fadeUp 0.8s cubic-bezier(.16,1,.3,1) 0.55s both; }
+  .main .section:nth-child(2) { animation: fadeUp 0.8s cubic-bezier(.16,1,.3,1) 0.65s both; }
+  .main .section:nth-child(3) { animation: fadeUp 0.8s cubic-bezier(.16,1,.3,1) 0.75s both; }
+  .main .section:nth-child(4) { animation: fadeUp 0.8s cubic-bezier(.16,1,.3,1) 0.85s both; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 860px) {
+    .hero { padding: 52px 32px 52px; }
+    .hero-inner { grid-template-columns: 1fr; gap: 24px; }
+    .hero-tag { text-align: left; max-width: 100%; }
+
+    .page { grid-template-columns: 1fr; padding: 40px 32px 60px; gap: 40px; }
+    .sidebar { position: static; }
+
+    .entry, .edu-entry {
+      grid-template-columns: 1fr;
+      gap: 6px 0;
+    }
+    .spec-grid { grid-template-columns: 1fr; }
+  }
+
+  @media (max-width: 520px) {
+    .hero { padding: 40px 24px; }
+    .page { padding: 32px 20px 48px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="hero-inner">
+    <h1 class="hero-name">Reda<br><em>Sebbani</em></h1>
+    <p class="hero-tag">An Enthusiastic Motivated Entrepreneur and a Business Performance Scaler who works with dedication and lot of enthusiasm!</p>
+  </div>
+</header>
+
+<!-- BODY -->
+<div class="page">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+
+    <div class="sidebar-section">
+      <span class="section-label">Contact</span>
+      <ul class="contact-list">
+        <li>
+          <span class="label">Email</span>
+          <span class="value"><a href="mailto:sebbani.reda@gmail.com">sebbani.reda@gmail.com</a></span>
+        </li>
+        <li>
+          <span class="label">Téléphone</span>
+          <span class="value">+212 638 819 373</span>
+        </li>
+        <li>
+          <span class="label">LinkedIn</span>
+          <span class="value"><a href="https://linkedin.com/in/reda-sebbani" target="_blank">reda-sebbani</a></span>
+        </li>
+        <li>
+          <span class="label">Adresse</span>
+          <span class="value">25 Av. Al Fourat, Imm H, Etg 4, Appt B — Maarif, Casablanca 22000</span>
+        </li>
+      </ul>
+    </div>
+
+    <div class="sidebar-section">
+      <span class="section-label">Soft Skills</span>
+      <ul class="skill-list">
+        <li class="skill-item"><span class="skill-dot"></span>Result-oriented</li>
+        <li class="skill-item"><span class="skill-dot"></span>Solution-oriented</li>
+        <li class="skill-item"><span class="skill-dot"></span>Leadership</li>
+        <li class="skill-item"><span class="skill-dot"></span>Teamwork</li>
+        <li class="skill-item"><span class="skill-dot"></span>Proactivity</li>
+        <li class="skill-item"><span class="skill-dot"></span>Soft Management</li>
+      </ul>
+    </div>
+
+    <div class="sidebar-section">
+      <span class="section-label">Langues</span>
+      <div class="lang-list">
+        <div class="lang-item">
+          <span>Arabe</span>
+          <div class="lang-bar"><div class="lang-fill" style="width:100%"></div></div>
+        </div>
+        <div class="lang-item">
+          <span>Français</span>
+          <div class="lang-bar"><div class="lang-fill" style="width:95%"></div></div>
+        </div>
+        <div class="lang-item">
+          <span>Anglais</span>
+          <div class="lang-bar"><div class="lang-fill" style="width:80%"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sidebar-section">
+      <span class="section-label">Centres d'intérêt</span>
+      <ul class="hobby-list">
+        <li>Bénévolat</li>
+        <li>Lecture</li>
+        <li>Yoga</li>
+        <li>Business &amp; Entrepreneuriat</li>
+      </ul>
+    </div>
+
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main">
+
+    <!-- EXPERIENCE -->
+    <section class="section">
+      <div class="section-head">
+        <span class="section-num">01</span>
+        <h2 class="section-title">Expérience professionnelle</h2>
+      </div>
+
+      <div class="entry">
+        <div class="entry-meta">
+          <div class="entry-date">Mars 2014<br>— Aujourd'hui</div>
+          <div class="entry-org">Indépendant</div>
+        </div>
+        <div>
+          <div class="entry-title">Consultant Freelance — Digital &amp; IT</div>
+          <p class="entry-body">Accompagnement de structures variées dans leur transformation numérique et leur performance marketing.</p>
+          <ul class="entry-list">
+            <li>Head of Digital Lead Acquisition — TheGameChanger Cie</li>
+            <li>SEO Consultant — Heartfulness Institute</li>
+            <li>Social Media Manager — The Doorz Escape Game &amp; La Terrasse Bleue</li>
+            <li>SEA-SEO Consultant — Teoinvest Real Estate &amp; Cigogne Futée</li>
+            <li>Junior Growth Hacker — Brighter Minds Adventure</li>
+            <li>Digital Transformation Project — Kea Consulting</li>
+            <li>Head of IT Department — eDukaty Headquarter, Casablanca</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="entry">
+        <div class="entry-meta">
+          <div class="entry-date">Mars 2017<br>— Mars 2020</div>
+          <div class="entry-org">Entrepreneuriat</div>
+        </div>
+        <div>
+          <div class="entry-title">CEO &amp; Co-Fondateur — Entrepreneur</div>
+          <ul class="entry-list">
+            <li>CEO &amp; Co-Fondateur, Brighter Minds — Branche Marocaine<br><span style="font-size:11.5px;color:var(--muted)">Approche éducative innovante basée sur les dernières découvertes neuroscientifiques</span></li>
+            <li>Business Partner &amp; Branch Director — eDukaty<br><span style="font-size:11.5px;color:var(--muted)">Organisation de soutien académique</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="entry">
+        <div class="entry-meta">
+          <div class="entry-date">Juin 2009<br>— Août 2013</div>
+          <div class="entry-org">CEVA</div>
+        </div>
+        <div>
+          <div class="entry-title">Network &amp; Security Administration</div>
+          <ul class="entry-list">
+            <li>Sécurisation des communications internes et externes du réseau (Firewall, Switch, DMZ, VPN…)</li>
+            <li>Maintien de tous les services IT au niveau de leurs exigences SLA</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- SPECIALISATIONS -->
+    <section class="section">
+      <div class="section-head">
+        <span class="section-num">02</span>
+        <h2 class="section-title">Spécialisations</h2>
+      </div>
+      <div class="spec-grid">
+        <div class="spec-item">Sales Acquisition &amp; Marketing Automation</div>
+        <div class="spec-item">Social Media Advertising</div>
+        <div class="spec-item">Brighter Minds Educational Programs</div>
+        <div class="spec-item">Search Engine Optimisation</div>
+        <div class="spec-item">IT Consulting &amp; Project Management</div>
+        <div class="spec-item">Network &amp; Security Administration</div>
+      </div>
+    </section>
+
+    <!-- FORMATION -->
+    <section class="section">
+      <div class="section-head">
+        <span class="section-num">03</span>
+        <h2 class="section-title">Formation</h2>
+      </div>
+
+      <div class="edu-entry">
+        <div class="edu-year">2006 — 2009</div>
+        <div>
+          <div class="edu-degree">Ingénieur — Master Télécommunications</div>
+          <div class="edu-school">ENSEIRB-MATMECA · Bordeaux, France</div>
+        </div>
+      </div>
+
+      <div class="edu-entry">
+        <div class="edu-year">2005 — 2006</div>
+        <div>
+          <div class="edu-degree">Classes Préparatoires MPSI / MP / MP*</div>
+          <div class="edu-school">Lycée Kléber · Strasbourg, France</div>
+        </div>
+      </div>
+
+      <div class="edu-entry">
+        <div class="edu-year">2004 — 2005</div>
+        <div>
+          <div class="edu-degree">Classes Préparatoires MPSI</div>
+          <div class="edu-school">Lycée Malherbe · Caen, France</div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+</body>
+</html>
